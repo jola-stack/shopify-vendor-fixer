@@ -3,9 +3,6 @@
 const crypto = require('crypto');
 const { findCanonical } = require('../lib/vendors');
 
-// Disable Vercel's default body parser so we can verify the raw HMAC
-module.exports.config = { api: { bodyParser: false } };
-
 function readRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -15,7 +12,7 @@ function readRawBody(req) {
   });
 }
 
-module.exports.default = async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const rawBody = await readRawBody(req);
@@ -44,13 +41,11 @@ module.exports.default = async function handler(req, res) {
 
   const canonical = findCanonical(vendor);
 
-  // No match → unknown brand, leave it alone
   if (!canonical) {
     console.log(`[vendor-fixer] No match for "${vendor}" (product ${id}) — skipping`);
     return res.status(200).end();
   }
 
-  // Already correct
   if (canonical === vendor) return res.status(200).end();
 
   console.log(`[vendor-fixer] "${vendor}" → "${canonical}" (product ${id})`);
@@ -74,4 +69,9 @@ module.exports.default = async function handler(req, res) {
   }
 
   return res.status(200).end();
-};
+}
+
+// Disable Vercel's body parser so we can verify the raw HMAC
+handler.config = { api: { bodyParser: false } };
+
+module.exports = handler;
