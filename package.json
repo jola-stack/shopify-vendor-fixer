@@ -1,0 +1,12 @@
+{
+  "name": "shopify-vendor-fixer",
+  "version": "1.0.0",
+  "description": "Auto-corrects Shopify product vendor names via webhook",
+  "main": "api/fix-vendor.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test/vendors.test.js"
+  }
+}
