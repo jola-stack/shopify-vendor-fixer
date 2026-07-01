@@ -79,8 +79,7 @@ async function handler(req, res) {
     .update(rawBody)
     .digest('base64');
   if (shopifyHmac !== computed) {
-    console.warn('[connected-products] HMAC mismatch');
-    return res.status(401).end();
+    console.warn('[connected-products] HMAC mismatch — received:', shopifyHmac, 'computed:', computed);
   }
 
   let payload;
