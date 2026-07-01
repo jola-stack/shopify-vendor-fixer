@@ -2,7 +2,7 @@
 
 const crypto = require('crypto');
 
-const BRANDS = new Set(['Adidas', 'Adidas Originals', 'Peak Performance']);
+const BRANDS = new Set(['Adidas', 'Adidas Originals', 'New Balance', 'Peak Performance']);
 const API_VERSION = '2024-10';
 
 function readRawBody(req) {
