@@ -114,8 +114,10 @@ async function handler(req, res) {
   }
 
   const titleLower = title.toLowerCase();
+  const sortKon = v => JSON.parse(v).sort().join('|');
+  const genderKey = sortKon(gender);
   const siblings = candidates.filter(
-    p => p.title.toLowerCase() === titleLower && p.kon?.value === gender
+    p => p.title.toLowerCase() === titleLower && p.kon?.value && sortKon(p.kon.value) === genderKey
   );
 
   if (siblings.length < 2) {
