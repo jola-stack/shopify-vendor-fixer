@@ -113,8 +113,9 @@ async function handler(req, res) {
     return res.status(200).end();
   }
 
+  const titleLower = title.toLowerCase();
   const siblings = candidates.filter(
-    p => p.title === title && p.kon?.value === gender
+    p => p.title.toLowerCase() === titleLower && p.kon?.value === gender
   );
 
   if (siblings.length < 2) {
